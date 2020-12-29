@@ -16,7 +16,7 @@ export const Column = ({ text, index, id }: ColumnProps) => {
     <ColumnContainer>
       <ColumnTitle>{text}</ColumnTitle>
       {state.lists[index].tasks.map((task) => (
-        <Card key={task.id} text={task.text}  />
+        <Card key={task.id} text={task.text} />
       ))}
       <AddNewItem
         toggleButtonText="+ Add another task"

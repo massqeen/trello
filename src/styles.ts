@@ -6,12 +6,12 @@ export const AppContainer = styled.div`
   display: flex;
   height: 100%;
   padding: 20px;
-  width: 100%;
+  width: fit-content;
 `;
 
 export const ColumnContainer = styled.div`
   background-color: #ebecf0;
-  width: 300px;
+  min-width: 300px;
   min-height: 40px;
   margin-right: 20px;
   border-radius: 3px;
@@ -48,7 +48,7 @@ export const AddItemButton = styled.button<AddItemButtonProps>`
   padding: 10px 12px;
   text-align: left;
   transition: background 85ms ease-in;
-  width: 100%;
+  width: 300px;
   &:hover {
     background-color: #628cb3;
   }
@@ -58,7 +58,7 @@ export const NewItemFormContainer = styled.div`
   max-width: 300px;
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 300px;
   align-items: flex-start;
 `;
 
