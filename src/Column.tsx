@@ -5,21 +5,24 @@ import { Card } from './Card';
 
 interface ColumnProps {
   text: string;
+  id: string;
   index: number;
 }
 
-export const Column = ({ text, index }: ColumnProps) => {
-  const { state } = useAppState();
+export const Column = ({ text, index, id }: ColumnProps) => {
+  const { state, dispatch } = useAppState();
 
   return (
     <ColumnContainer>
       <ColumnTitle>{text}</ColumnTitle>
       {state.lists[index].tasks.map((task) => (
-        <Card key={task.id} text={task.text} />
+        <Card key={task.id} text={task.text}  />
       ))}
       <AddNewItem
         toggleButtonText="+ Add another task"
-        onAdd={() => console.log(text)}
+        onAdd={(text) =>
+          dispatch({ type: 'ADD_TASK', payload: { text, taskId: id } })
+        }
         dark
       />
     </ColumnContainer>
