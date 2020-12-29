@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useReducer } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import { nanoid } from 'nanoid';
 import { findItemIndexById } from './utils/findItemIndexById';
-import { moveItem } from './moveItem';
+import { moveItem } from './utils/moveItem';
 import { DragItem } from './DragItem';
 
 interface Task {
@@ -68,7 +68,7 @@ const appStateReducer = (state: AppState, action: Action): AppState => {
         ...state,
         lists: [
           ...state.lists,
-          { id: uuidv4(), text: action.payload, tasks: [] },
+          { id: nanoid(), text: action.payload, tasks: [] },
         ],
       };
     }
@@ -79,7 +79,7 @@ const appStateReducer = (state: AppState, action: Action): AppState => {
         action.payload.taskId
       );
       state.lists[targetColumnIndex].tasks.push({
-        id: uuidv4(),
+        id: nanoid(),
         text: action.payload.text,
       });
       return { ...state };

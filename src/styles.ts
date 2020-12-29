@@ -7,9 +7,17 @@ export const AppContainer = styled.div`
   height: 100%;
   padding: 20px;
   width: fit-content;
+  min-width: 100%;
 `;
 
-export const ColumnContainer = styled.div`
+interface DragPreviewContainerProps {
+  isHidden?: boolean;
+}
+export const DragPreviewContainer = styled.div<DragPreviewContainerProps>`
+  opacity: ${(props) => (props.isHidden ? 0.3 : 1)};
+`;
+
+export const ColumnContainer = styled(DragPreviewContainer)`
   background-color: #ebecf0;
   min-width: 300px;
   min-height: 40px;
@@ -48,7 +56,7 @@ export const AddItemButton = styled.button<AddItemButtonProps>`
   padding: 10px 12px;
   text-align: left;
   transition: background 85ms ease-in;
-  width: 300px;
+  width: 284px;
   &:hover {
     background-color: #628cb3;
   }
