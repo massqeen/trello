@@ -4,7 +4,7 @@ import { useAppState } from './AppStateContext';
 import { AddNewItem } from './AddNewItem';
 import { ColumnContainer, ColumnTitle } from './styles';
 import { Card } from './Card';
-import { useItemDrag } from './useItemDrag';
+import { useItemDrag } from './utils/hooks/useItemDrag';
 import { DragItem } from './DragItem';
 import { isHidden } from './utils/isHidden';
 

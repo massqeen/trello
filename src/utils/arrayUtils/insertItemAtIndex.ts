@@ -1,8 +1,7 @@
 import { List } from '../../AppStateContext';
 
-export function insertItemAtIndex(array: List[], item: List, index: number) {
-  console.log(item);
-  const result = [...array];
-  result.splice(index, 0, item);
-  return result;
-}
+export const insertItemAtIndex = (array: List[], item: List, index: number) => [
+  ...array.slice(0, index),
+  item,
+  ...array.slice(index),
+];
