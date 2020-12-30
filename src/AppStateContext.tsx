@@ -2,14 +2,14 @@ import React, { createContext, useContext, useReducer } from 'react';
 import { nanoid } from 'nanoid';
 import { findItemIndexById } from './utils/arrayUtils/findItemIndexById';
 import { overrideItemAtIndex } from './utils/arrayUtils/overrideItemAtIndex';
-import { moveItem } from './utils/moveItem';
+import { moveItem } from './utils/arrayUtils/moveItem';
 import { DragItem } from './DragItem';
 
 interface Task {
   id: string;
   text: string;
 }
-interface List {
+export interface List {
   id: string;
   text: string;
   tasks: Task[];
@@ -99,8 +99,8 @@ const appStateReducer = (state: AppState, action: Action): AppState => {
 
     case 'MOVE_LIST': {
       const { dragIndex, hoverIndex } = action.payload;
-      state.lists = moveItem(state.lists, dragIndex, hoverIndex);
-      return { ...state };
+      const lists = moveItem(state.lists, dragIndex, hoverIndex);
+      return { ...state, lists };
     }
 
     case 'SET_DRAGGED_ITEM': {
