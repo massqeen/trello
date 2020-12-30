@@ -9,12 +9,13 @@ import { DragItem } from './DragItem';
 import { isHidden } from './utils/isHidden';
 
 interface ColumnProps {
+  isPreview?: boolean;
   text: string;
   id: string;
   index: number;
 }
 
-export const Column = ({ text, index, id }: ColumnProps) => {
+export const Column = ({ text, index, id, isPreview }: ColumnProps) => {
   const [, drop] = useDrop({
     accept: 'COLUMN',
     hover(item: DragItem) {
@@ -39,7 +40,8 @@ export const Column = ({ text, index, id }: ColumnProps) => {
   return (
     <ColumnContainer
       ref={ref}
-      isHidden={isHidden(state.draggedItem, 'COLUMN', id)}
+      isHidden={isHidden(isPreview, state.draggedItem, 'COLUMN', id)}
+      isPreview={isPreview}
     >
       <ColumnTitle>{text}</ColumnTitle>
       {state.lists[index].tasks.map((task, i) => (
