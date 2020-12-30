@@ -3,7 +3,9 @@ import { nanoid } from 'nanoid';
 import { findItemIndexById } from './utils/arrayUtils/findItemIndexById';
 import { overrideItemAtIndex } from './utils/arrayUtils/overrideItemAtIndex';
 import { moveItem } from './utils/arrayUtils/moveItem';
-import { DragItem } from './DragItem';
+import { insertItemAtIndex } from './utils/arrayUtils/insertItemAtIndex';
+import { removeItemAtIndex } from './utils/arrayUtils/removeItemAtIndex';
+import { DragItems } from './DragItems';
 
 interface Task {
   id: string;
@@ -17,7 +19,7 @@ export interface List {
 
 export interface AppState {
   lists: List[];
-  draggedItem: DragItem | undefined;
+  draggedItem: DragItems | undefined;
 }
 
 const appData: AppState = {
@@ -58,8 +60,17 @@ type Action =
       };
     }
   | {
+      type: 'MOVE_TASK';
+      payload: {
+        dragIndex: number;
+        hoverIndex: number;
+        sourceColumn: string;
+        targetColumn: string;
+      };
+    }
+  | {
       type: 'SET_DRAGGED_ITEM';
-      payload: DragItem | undefined;
+      payload: DragItems | undefined;
     };
 
 const appStateReducer = (state: AppState, action: Action): AppState => {
@@ -101,6 +112,48 @@ const appStateReducer = (state: AppState, action: Action): AppState => {
       const { dragIndex, hoverIndex } = action.payload;
       const lists = moveItem(state.lists, dragIndex, hoverIndex);
       return { ...state, lists };
+    }
+
+    case 'MOVE_TASK': {
+      const {
+        dragIndex,
+        hoverIndex,
+        sourceColumn,
+        targetColumn,
+      } = action.payload;
+
+      const sourceListIndex = findItemIndexById(state.lists, sourceColumn);
+      const targetListIndex = findItemIndexById(state.lists, targetColumn);
+      const sourceList = state.lists[sourceListIndex];
+      const task = sourceList.tasks[dragIndex];
+
+      // remove task from source list and get new state
+      const updatedSourceList = {
+        ...sourceList,
+        tasks: removeItemAtIndex(sourceList.tasks, dragIndex),
+      };
+      const stateWithUpdatedSourceList = {
+        ...state,
+        lists: overrideItemAtIndex(
+          state.lists,
+          updatedSourceList,
+          sourceListIndex
+        ),
+      };
+
+      // get updated target list by appending the new task to the tasks array
+      const targetList = stateWithUpdatedSourceList.lists[targetListIndex];
+      const updatedTargetList = {
+        ...targetList,
+        tasks: insertItemAtIndex(targetList.tasks, task, hoverIndex),
+      };
+      const updatedLists = overrideItemAtIndex(
+        stateWithUpdatedSourceList.lists,
+        updatedTargetList,
+        targetListIndex
+      );
+
+      return { ...stateWithUpdatedSourceList, lists: updatedLists };
     }
 
     case 'SET_DRAGGED_ITEM': {

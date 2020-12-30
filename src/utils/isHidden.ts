@@ -1,8 +1,8 @@
-import { DragItem } from '../DragItem';
+import { DragItems } from '../DragItems';
 
 export const isHidden = (
   isPreview: boolean | undefined,
-  draggedItem: DragItem | undefined,
+  draggedItem: DragItems | undefined,
   itemType: string,
   id: string
 ): boolean => {

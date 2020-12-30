@@ -1,7 +1,5 @@
-import { List } from '../../AppStateContext';
-
-export const insertItemAtIndex = (array: List[], item: List, index: number) => [
-  ...array.slice(0, index),
-  item,
-  ...array.slice(index),
-];
+export const insertItemAtIndex = <T>(
+  array: T[],
+  item: T,
+  index: number
+): T[] => [...array.slice(0, index), item, ...array.slice(index)];
