@@ -48,7 +48,7 @@ export const Column = ({ text, index, id }: ColumnProps) => {
       <AddNewItem
         toggleButtonText="+ Add another task"
         onAdd={(text) =>
-          dispatch({ type: 'ADD_TASK', payload: { text, taskId: id } })
+          dispatch({ type: 'ADD_TASK', payload: { text, listId: id } })
         }
         dark
       />

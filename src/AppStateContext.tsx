@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useReducer } from 'react';
 import { nanoid } from 'nanoid';
-import { findItemIndexById } from './utils/findItemIndexById';
+import { findItemIndexById } from './utils/arrayUtils/findItemIndexById';
+import { overrideItemAtIndex } from './utils/arrayUtils/overrideItemAtIndex';
 import { moveItem } from './utils/moveItem';
 import { DragItem } from './DragItem';
 
@@ -47,7 +48,7 @@ type Action =
     }
   | {
       type: 'ADD_TASK';
-      payload: { text: string; taskId: string };
+      payload: { text: string; listId: string };
     }
   | {
       type: 'MOVE_LIST';
@@ -74,15 +75,26 @@ const appStateReducer = (state: AppState, action: Action): AppState => {
     }
 
     case 'ADD_TASK': {
-      const targetColumnIndex = findItemIndexById(
+      const targetListIndex = findItemIndexById(
         state.lists,
-        action.payload.taskId
+        action.payload.listId
       );
-      state.lists[targetColumnIndex].tasks.push({
-        id: nanoid(),
-        text: action.payload.text,
-      });
-      return { ...state };
+      const targetList = state.lists[targetListIndex];
+      const updatedTargetList = {
+        ...targetList,
+        tasks: [
+          ...targetList.tasks,
+          { id: nanoid(), text: action.payload.text },
+        ],
+      };
+      return {
+        ...state,
+        lists: overrideItemAtIndex(
+          state.lists,
+          updatedTargetList,
+          targetListIndex
+        ),
+      };
     }
 
     case 'MOVE_LIST': {
@@ -100,11 +112,9 @@ const appStateReducer = (state: AppState, action: Action): AppState => {
   }
 };
 
-type Dispatch = (value: Action) => void;
-
 interface AppStateContextProps {
   state: AppState;
-  dispatch: Dispatch;
+  dispatch: React.Dispatch<Action>;
 }
 
 const AppStateContext = createContext<AppStateContextProps>(
