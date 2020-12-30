@@ -9,6 +9,11 @@ interface NewItemFormProps {
 export const NewItemForm = ({ onAdd }: NewItemFormProps) => {
   const [text, setText] = useState('');
   const inputRef = useFocus();
+  const handleAddText = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      onAdd(text);
+    }
+  };
 
   return (
     <NewItemFormContainer>
@@ -16,6 +21,7 @@ export const NewItemForm = ({ onAdd }: NewItemFormProps) => {
         ref={inputRef}
         value={text}
         onChange={({ target }) => setText(target.value)}
+        onKeyPress={handleAddText}
       />
       <NewItemButton onClick={() => onAdd(text)}>Create</NewItemButton>
     </NewItemFormContainer>
