@@ -111,6 +111,7 @@ const AppStateContext = createContext<AppStateContextProps>(
   {} as AppStateContextProps
 );
 
+// Alternatively, we could manually add children?: React.ReactNode to the interface
 export const AppStateProvider = ({ children }: React.PropsWithChildren<{}>) => {
   const [state, dispatch] = useReducer(appStateReducer, appData);
 
