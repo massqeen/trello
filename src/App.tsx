@@ -1,9 +1,9 @@
 import React from 'react';
-import { useAppState } from './AppStateContext';
-import { Column } from './Column';
-import { AddNewItem } from './AddNewItem';
-import { CustomDragLayer } from './CustomDragLayer';
-import { AppContainer } from './styles';
+import { useAppState } from './utils/hooks/useAppState';
+import { Column } from './components/Column/Column';
+import { AddNewItem } from './components/AddNewItem';
+import { CustomDragLayer } from './components/CustomDragLayer/CustomDragLayer';
+import { AppContainer } from './components/AppContainer';
 
 const App = () => {
   const { state, dispatch } = useAppState();

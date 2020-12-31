@@ -1,8 +1,8 @@
 import { useDrag } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import { useEffect } from 'react';
-import { useAppState } from '../../AppStateContext';
-import { DragItems } from '../../DragItems';
+import { useAppState } from './useAppState';
+import { DragItems } from '../DragItems';
 
 export const useItemDrag = (item: DragItems) => {
   const { dispatch } = useAppState();

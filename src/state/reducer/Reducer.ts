@@ -1,79 +1,13 @@
-import React, { createContext, useContext, useReducer } from 'react';
 import { nanoid } from 'nanoid';
-import { findItemIndexById } from './utils/arrayUtils/findItemIndexById';
-import { overrideItemAtIndex } from './utils/arrayUtils/overrideItemAtIndex';
-import { moveItem } from './utils/arrayUtils/moveItem';
-import { insertItemAtIndex } from './utils/arrayUtils/insertItemAtIndex';
-import { removeItemAtIndex } from './utils/arrayUtils/removeItemAtIndex';
-import { DragItems } from './DragItems';
+import { findItemIndexById } from '../../utils/arrayUtils/findItemIndexById';
+import { overrideItemAtIndex } from '../../utils/arrayUtils/overrideItemAtIndex';
+import { moveItem } from '../../utils/arrayUtils/moveItem';
+import { removeItemAtIndex } from '../../utils/arrayUtils/removeItemAtIndex';
+import { insertItemAtIndex } from '../../utils/arrayUtils/insertItemAtIndex';
+import { AppState } from '../AppState';
+import { Action } from '../actions/Action';
 
-interface Task {
-  id: string;
-  text: string;
-}
-export interface List {
-  id: string;
-  text: string;
-  tasks: Task[];
-}
-
-export interface AppState {
-  lists: List[];
-  draggedItem: DragItems | undefined;
-}
-
-const appData: AppState = {
-  lists: [
-    {
-      id: '0',
-      text: 'To Do',
-      tasks: [{ id: 'c0', text: 'Generate app scaffold' }],
-    },
-    {
-      id: '1',
-      text: 'In Progress',
-      tasks: [{ id: 'c2', text: 'Learn Typescript' }],
-    },
-    {
-      id: '2',
-      text: 'Done',
-      tasks: [{ id: 'c3', text: 'Begin to use static typing' }],
-    },
-  ],
-  draggedItem: undefined,
-};
-
-type Action =
-  | {
-      type: 'ADD_LIST';
-      payload: string;
-    }
-  | {
-      type: 'ADD_TASK';
-      payload: { text: string; listId: string };
-    }
-  | {
-      type: 'MOVE_LIST';
-      payload: {
-        dragIndex: number;
-        hoverIndex: number;
-      };
-    }
-  | {
-      type: 'MOVE_TASK';
-      payload: {
-        dragIndex: number;
-        hoverIndex: number;
-        sourceColumn: string;
-        targetColumn: string;
-      };
-    }
-  | {
-      type: 'SET_DRAGGED_ITEM';
-      payload: DragItems | undefined;
-    };
-
-const appStateReducer = (state: AppState, action: Action): AppState => {
+export const Reducer = (state: AppState, action: Action): AppState => {
   switch (action.type) {
     case 'ADD_LIST': {
       return {
@@ -164,25 +98,3 @@ const appStateReducer = (state: AppState, action: Action): AppState => {
       return state;
   }
 };
-
-interface AppStateContextProps {
-  state: AppState;
-  dispatch: React.Dispatch<Action>;
-}
-
-const AppStateContext = createContext<AppStateContextProps>(
-  {} as AppStateContextProps
-);
-
-// Alternatively, we could manually add children?: React.ReactNode to the interface
-export const AppStateProvider = ({ children }: React.PropsWithChildren<{}>) => {
-  const [state, dispatch] = useReducer(appStateReducer, appData);
-
-  return (
-    <AppStateContext.Provider value={{ state, dispatch }}>
-      {children}
-    </AppStateContext.Provider>
-  );
-};
-
-export const useAppState = () => useContext(AppStateContext);

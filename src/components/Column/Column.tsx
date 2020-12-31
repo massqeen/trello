@@ -1,12 +1,13 @@
 import { useRef } from 'react';
 import { useDrop } from 'react-dnd';
-import { useAppState } from './AppStateContext';
-import { AddNewItem } from './AddNewItem';
-import { ColumnContainer, ColumnTitle } from './styles';
-import { Card } from './Card';
-import { useItemDrag } from './utils/hooks/useItemDrag';
-import { DragItems } from './DragItems';
-import { isHidden } from './utils/isHidden';
+import { useAppState } from '../../utils/hooks/useAppState';
+import { AddNewItem } from '../AddNewItem';
+import { ColumnContainer } from './ColumnContainer';
+import { ColumnTitle } from './ColumnTitle';
+import { Card } from '../Card/Card';
+import { useItemDrag } from '../../utils/hooks/useItemDrag';
+import { DragItems } from '../../utils/DragItems';
+import { isHidden } from '../../utils/isHidden';
 
 interface ColumnProps {
   isPreview?: boolean;

@@ -1,8 +1,8 @@
 import React from 'react';
 import { XYCoord, useDragLayer } from 'react-dnd';
-import { CustomDragLayerContainer } from './styles';
-import { Column } from './Column';
-import { Card } from './Card';
+import { CustomDragLayerContainer } from './CustomDragLayerContainer';
+import { Column } from '../Column/Column';
+import { Card } from '../Card/Card';
 
 const getItemStyles = (currentOffset: XYCoord | null): React.CSSProperties => {
   if (!currentOffset) {
