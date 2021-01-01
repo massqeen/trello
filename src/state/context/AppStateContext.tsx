@@ -1,8 +1,8 @@
-import React, { createContext, useReducer } from 'react';
-import { AppState } from '../AppState';
-import { appData } from '../AppState';
+import React, { createContext, useReducer, useEffect } from 'react';
 import { Action } from '../actions/Action';
+import { appData, AppState } from '../AppState';
 import { Reducer } from '../reducer/Reducer';
+import { save } from '../../utils/api/api';
 
 interface AppStateContextProps {
   state: AppState;
@@ -16,6 +16,9 @@ export const AppStateContext = createContext<AppStateContextProps>(
 // Alternatively, we could manually add children?: React.ReactNode to the interface
 export const AppStateProvider = ({ children }: React.PropsWithChildren<{}>) => {
   const [state, dispatch] = useReducer(Reducer, appData);
+  useEffect(() => {
+    save(state);
+  }, [state]);
 
   return (
     <AppStateContext.Provider value={{ state, dispatch }}>

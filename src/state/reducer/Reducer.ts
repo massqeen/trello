@@ -1,11 +1,11 @@
 import { nanoid } from 'nanoid';
 import { findItemIndexById } from '../../utils/arrayUtils/findItemIndexById';
-import { overrideItemAtIndex } from '../../utils/arrayUtils/overrideItemAtIndex';
-import { moveItem } from '../../utils/arrayUtils/moveItem';
-import { removeItemAtIndex } from '../../utils/arrayUtils/removeItemAtIndex';
 import { insertItemAtIndex } from '../../utils/arrayUtils/insertItemAtIndex';
-import { AppState } from '../AppState';
+import { moveItem } from '../../utils/arrayUtils/moveItem';
+import { overrideItemAtIndex } from '../../utils/arrayUtils/overrideItemAtIndex';
+import { removeItemAtIndex } from '../../utils/arrayUtils/removeItemAtIndex';
 import { Action } from '../actions/Action';
+import { AppState } from '../AppState';
 
 export const Reducer = (state: AppState, action: Action): AppState => {
   switch (action.type) {
