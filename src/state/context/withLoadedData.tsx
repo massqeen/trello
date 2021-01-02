@@ -5,7 +5,7 @@ import React, {
   useState,
 } from 'react';
 import { load } from '../../utils/api/api';
-import { AppState } from '../AppState';
+import { AppState, appData } from '../AppState';
 
 export const withLoadedData = (
   WrappedComponent: ComponentType<PropsWithChildren<{ initialState: AppState }>>
@@ -13,10 +13,7 @@ export const withLoadedData = (
   return ({ children }: PropsWithChildren<{}>) => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<Error | undefined>();
-    const [initialState, setInitialState] = useState<AppState>({
-      lists: [],
-      draggedItem: undefined,
-    });
+    const [initialState, setInitialState] = useState<AppState>(appData);
 
     useEffect(() => {
       const fetchInitialState = async () => {
@@ -34,7 +31,7 @@ export const withLoadedData = (
       return <div>Loading</div>;
     }
     if (error) {
-      return <div>{error.message}</div>;
+      console.log(error.message);
     }
     return (
       <WrappedComponent initialState={initialState}>
